@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export default function Board() {
     const [rows, setRows] = useState<number>(3);
@@ -10,7 +10,7 @@ export default function Board() {
     const [turns, setTurns] = useState<number>(0);
 
     // const [order, setOrder] = useState<number[]>(Array.from({ length: rows * columns }, (_, i) => i + 1));
-    const [order, setOrder] = useState<number[]>([3, 7, 2, 8, 1, 4, 6, 5, 9]);
+    const [order, setOrder] = useState<number[]>([8, 5, 3, 1, 7, 4, 6, 2, 9]);
 
     const handleDragStart = (e: React.DragEvent<HTMLImageElement>) => {
         const tile = parseInt(e.currentTarget.alt);
@@ -58,6 +58,19 @@ export default function Board() {
         setTurns(turns + 1);
     }
 
+    const handleOnClick = (e: any) => {
+        const tile = parseInt(e.currentTarget.alt);
+        const tileIndex = order.indexOf(tile);
+        const blankIndex = order.indexOf(9);
+
+        if(tileIndex % columns !== 0 && tileIndex - 1 === blankIndex) swapTiles(tile, 9);
+        if(tileIndex % columns !== columns - 1 && tileIndex + 1 === blankIndex) swapTiles(tile, 9);
+        if(tileIndex >= columns && tileIndex - columns === blankIndex) swapTiles(tile, 9);
+        if(tileIndex < rows * columns - columns && tileIndex + columns === blankIndex) swapTiles(tile, 9);
+
+        setTurns(turns + 1);
+    }
+
     return (
         <div className='w-[30.5rem] h-[30.5rem] bg-secondary border-4 border-solid border-primary flex flex-wrap'>
             {
@@ -73,7 +86,10 @@ export default function Board() {
                         onDragLeave={handleDragLeave}   // NOTE: Dragged image leaving other image
                         onDrop={handleDrop}             // NOTE: Dragged image then dropped the image on other image
                         onDragEnd={handleDragEnd}       // NOTE: After drop, swap the tiles
-                        draggable
+
+                        onClick={handleOnClick}         // NOTE: Click the image to move the tile
+
+                        draggable={tile !== 9}          // NOTE: If the tile is not the blank tile, it can be dragged
                     />
                 ))
             }

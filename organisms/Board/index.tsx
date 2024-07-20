@@ -1,4 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 
 export default function Board() {
     const [rows, setRows] = useState<number>(3);
@@ -12,7 +13,7 @@ export default function Board() {
     // const [order, setOrder] = useState<number[]>(Array.from({ length: rows * columns }, (_, i) => i + 1));
     const [order, setOrder] = useState<number[]>([8, 5, 3, 1, 7, 4, 6, 2, 9]);
 
-    const handleDragStart = (e: React.DragEvent<HTMLImageElement>) => {
+    const handleDragStart = (e: any) => {
         const tile = parseInt(e.currentTarget.alt);
         setCurrTile(tile);
     }
@@ -72,24 +73,27 @@ export default function Board() {
     }
 
     return (
-        <div className='w-[30.5rem] h-[30.5rem] bg-secondary border-4 border-solid border-primary flex flex-wrap'>
+        <div className='w-[18.5rem] md:w-[30.5rem] h-[18.5rem] md:h-[30.5rem] bg-[#671111] border-4 border-solid border-primary flex flex-wrap'>
             {
                 order.map((tile, index) => (
-                    <img
+                    <motion.img
                         src={`/images/igi/${tile}.png`} 
                         alt={`${tile}`}
-                        className={`w-[10rem] h-[10rem] border border-solid border-gray-500 ${tile === 9 ? 'opacity-50' : ''}`}
-                        key={index}
+                        className={`w-[6rem] md:w-[10rem] h-[6rem] md:h-[10rem] border border-solid border-gray-500 ${tile === 9 ? 'opacity-0' : ''}`}
+                        key={tile}
                         onDragStart={handleDragStart}   // NOTE: Click an image to drag
                         onDragOver={handleDragOver}     // NOTE: Moving the image while being clicked
                         onDragEnter={handleDragEnter}   // NOTE: Dragging the image into the other image
                         onDragLeave={handleDragLeave}   // NOTE: Dragged image leaving other image
                         onDrop={handleDrop}             // NOTE: Dragged image then dropped the image on other image
                         onDragEnd={handleDragEnd}       // NOTE: After drop, swap the tiles
-
                         onClick={handleOnClick}         // NOTE: Click the image to move the tile
-
                         draggable={tile !== 9}          // NOTE: If the tile is not the blank tile, it can be dragged
+
+                        layout
+                        layoutId={`tile-${tile}`}
+                        transition={{ duration: 0.2 }}
+                        initial={{opacity: tile === 9 ? 0 : 1 }}
                     />
                 ))
             }

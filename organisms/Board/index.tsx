@@ -21,9 +21,9 @@ export default function Board() {
     const [order, setOrder] = useState<number[]>(Level1Puzzle[0]);
 
     useEffect(() => {
-        // const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
-        // setOrder(puzzleOrder);
-        setOrder([1,2,3,4,5,6,7,9,8]);
+        const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
+        setOrder(puzzleOrder);
+        // setOrder([1,2,3,4,5,6,7,9,8]);
         setIsLoading(false);
 
         return () => {

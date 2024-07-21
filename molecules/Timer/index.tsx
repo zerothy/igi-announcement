@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 
 import { useSolved } from "@/context/SolvedContext"
 
-import RetryButton from "../RetryButton"
+import RetryButton from "../../atoms/RetryButton"
 
 export default function Timer({ time }: { time: number }) {
     const [timeLeft, setTimeLeft] = useState(time)

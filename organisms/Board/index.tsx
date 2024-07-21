@@ -23,6 +23,7 @@ export default function Board() {
     useEffect(() => {
         const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
         setOrder(puzzleOrder);
+        // setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
         setIsLoading(false);
 
         return () => {
@@ -37,6 +38,7 @@ export default function Board() {
     const retryPuzzle = () => {
         const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
         setOrder([...puzzleOrder]);
+        // setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
         setIsSolved(false);
         setIsFailed(false);
         setTurns(0);

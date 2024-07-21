@@ -1,6 +1,6 @@
 import Solution from "@/atoms/Solution"
-import Timer from "@/atoms/Timer"
-import { time } from "console"
+
+import Timer from "@/molecules/Timer"
 
 export default function Widgets({ timeLeft }: { timeLeft: number }) {
     return (

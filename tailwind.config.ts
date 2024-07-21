@@ -15,6 +15,10 @@ const config: Config = {
         'primary': '#A61E24',
         'secondary': '#DF2831',
       },
+      fontFamily: {
+        'urbanist': ['"Urbanist"', 'sans-serif'],
+        'lexend': ['"Lexend"', 'sans-serif'],
+      },
     },
   },
   plugins: [],

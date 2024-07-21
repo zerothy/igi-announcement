@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
+import Level1Puzzle from '@/atoms/Level1Puzzle';
+
 export default function Board() {
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
     const [rows, setRows] = useState<number>(3);
     const [columns, setColumns] = useState<number>(3);
 
@@ -10,8 +14,18 @@ export default function Board() {
 
     const [turns, setTurns] = useState<number>(0);
 
-    // const [order, setOrder] = useState<number[]>(Array.from({ length: rows * columns }, (_, i) => i + 1));
-    const [order, setOrder] = useState<number[]>([8, 5, 3, 1, 7, 4, 6, 2, 9]);
+    // const [order, setOrder] = useState<number[]>(Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)]);
+    const [order, setOrder] = useState<number[]>(Level1Puzzle[0]);
+
+    useEffect(() => {
+        const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
+        setOrder(puzzleOrder);
+        setIsLoading(false);
+
+        return () => {
+            setIsLoading(true);
+        }
+    }, [])
 
     const handleDragStart = (e: any) => {
         const tile = parseInt(e.currentTarget.alt);
@@ -73,9 +87,14 @@ export default function Board() {
     }
 
     return (
-        <div className='w-[18.5rem] md:w-[30.5rem] h-[18.5rem] md:h-[30.5rem] bg-[#671111] border-4 border-solid border-primary flex flex-wrap'>
+        <div className='w-[18.5rem] md:w-[30.5rem] h-[18.5rem] md:h-[30.5rem] z-[80] bg-[#671111] border-4 border-solid border-primary flex flex-wrap'>
             {
-                order.map((tile, index) => (
+                (isLoading) ? (
+                    <div className='w-full h-full flex justify-center items-center'>
+                        <h1 className='font-urbanist text-2xl text-[#FFEDFD]'>Loading...</h1>
+                    </div>
+                ) :
+                (order.map((tile, index) => (
                     <motion.img
                         src={`/images/igi/${tile}.png`} 
                         alt={`${tile}`}
@@ -95,7 +114,7 @@ export default function Board() {
                         transition={{ duration: 0.2 }}
                         initial={{opacity: tile === 9 ? 0 : 1 }}
                     />
-                ))
+                )))
             }
         </div>
     )

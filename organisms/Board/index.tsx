@@ -3,8 +3,11 @@ import { motion } from 'framer-motion';
 
 import Level1Puzzle from '@/atoms/Level1Puzzle';
 
+import { useSolved } from '@/context/SolvedContext';
+
 export default function Board() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { isSolved, setIsSolved } = useSolved();
 
     const [rows, setRows] = useState<number>(3);
     const [columns, setColumns] = useState<number>(3);
@@ -18,8 +21,9 @@ export default function Board() {
     const [order, setOrder] = useState<number[]>(Level1Puzzle[0]);
 
     useEffect(() => {
-        const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
-        setOrder(puzzleOrder);
+        // const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
+        // setOrder(puzzleOrder);
+        setOrder([1,2,3,4,5,6,7,9,8]);
         setIsLoading(false);
 
         return () => {
@@ -57,6 +61,10 @@ export default function Board() {
         newOrder[currIndex] = otherTile;
         newOrder[otherIndex] = currTile;
         setOrder(newOrder);
+
+        if(newOrder.toString() === Array.from({ length: rows * columns }, (_, i) => i + 1).toString()) {
+            setIsSolved(true);
+        }
     }
 
     const handleDragEnd = () => {
@@ -96,7 +104,7 @@ export default function Board() {
                 ) :
                 (order.map((tile, index) => (
                     <motion.img
-                        src={`/images/igi/${tile}.png`} 
+                        src={`/images/level1/${tile}.png`} 
                         alt={`${tile}`}
                         className={`w-[6rem] md:w-[10rem] h-[6rem] md:h-[10rem] border border-solid border-gray-500 ${tile === 9 ? 'opacity-0' : ''}`}
                         key={tile}

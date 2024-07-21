@@ -17,11 +17,11 @@ export default function GamePage() {
                 isSolved && <Wins />
             }
             <Background />
-            <Logo />
+            <Logo title='SOLVE TO REVEAL IGI GAME JAM 2ND RUNNER UP' size={4} />
             <div className='flex flex-col lg:flex-row'>
                 <div className='lg:w-[16rem] lg:mr-6' />
                 <Board />
-                <Widgets />
+                <Widgets timeLeft={3} />
             </div>
         </div>
     )

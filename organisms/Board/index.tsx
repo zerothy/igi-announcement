@@ -7,7 +7,7 @@ import { useSolved } from '@/context/SolvedContext';
 
 export default function Board() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const { isSolved, setIsSolved } = useSolved();
+    const { isFailed, setIsSolved, setIsFailed } = useSolved();
 
     const [rows, setRows] = useState<number>(3);
     const [columns, setColumns] = useState<number>(3);
@@ -23,13 +23,24 @@ export default function Board() {
     useEffect(() => {
         const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
         setOrder(puzzleOrder);
-        // setOrder([1,2,3,4,5,6,7,9,8]);
         setIsLoading(false);
 
         return () => {
             setIsLoading(true);
         }
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        if(isFailed) retryPuzzle();
+    }, [isFailed]);
+
+    const retryPuzzle = () => {
+        const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
+        setOrder([...puzzleOrder]);
+        setIsSolved(false);
+        setIsFailed(false);
+        setTurns(0);
+    }
 
     const handleDragStart = (e: any) => {
         const tile = parseInt(e.currentTarget.alt);

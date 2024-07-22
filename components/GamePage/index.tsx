@@ -9,7 +9,7 @@ import { useSolved } from '@/context/SolvedContext'
 import { useEffect } from 'react'
 
 export default function GamePage() {
-    const { isSolved, setTotalWins } = useSolved();
+    const { isSolved, setTotalWins, totalWins } = useSolved();
 
     useEffect(() => {
         if (isSolved) {
@@ -23,7 +23,7 @@ export default function GamePage() {
                 isSolved && <Wins />
             }
             <Background />
-            <Logo title='SOLVE TO REVEAL IGI GAME JAM 2ND RUNNER UP' size={4} />
+            <Logo title={`${totalWins === 0 ? 'SOLVE TO REVEAL IGI GAME JAM 2ND RUNNER UP' : totalWins === 1 ? 'SOLVE TO REVEAL IGI GAME JAM 1ST RUNNER UP' : 'SOLVE TO REVEAL IGI GAME JAM CHAMPION'}`} size={4} />
             <div className='flex flex-col lg:flex-row'>
                 <div className='lg:w-[16rem] lg:mr-6' />
                 <Board />

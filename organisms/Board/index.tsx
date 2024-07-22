@@ -24,9 +24,9 @@ export default function Board() {
 
     useEffect(() => {
         if(totalWins === 0) {
-            // const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
-            // setOrder(puzzleOrder);
-            setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
+            const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
+            setOrder(puzzleOrder);
+            // setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
         }else if(totalWins === 1) {
             const puzzleOrder = Level2Puzzle[Math.floor(Math.random() * Level2Puzzle.length)];
             setOrder(puzzleOrder);
@@ -70,9 +70,9 @@ export default function Board() {
         await new Promise(resolve => setTimeout(resolve, 0)); // Simulate async operation
     
         if(totalWins === 0) {
-            // const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
-            // setOrder(puzzleOrder);
-            setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
+            const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
+            setOrder(puzzleOrder);
+            // setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
         } else if(totalWins === 1) {
             const puzzleOrder = Level2Puzzle[Math.floor(Math.random() * Level2Puzzle.length)];
             setOrder(puzzleOrder);

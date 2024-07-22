@@ -7,7 +7,7 @@ import { useSolved } from '@/context/SolvedContext';
 
 export default function Board() {
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const { isFailed, setIsSolved, setIsFailed } = useSolved();
+    const { isFailed, isSolved, setIsSolved, setIsFailed } = useSolved();
 
     const [rows, setRows] = useState<number>(3);
     const [columns, setColumns] = useState<number>(3);
@@ -34,6 +34,12 @@ export default function Board() {
     useEffect(() => {
         if(isFailed) retryPuzzle();
     }, [isFailed]);
+
+    useEffect(() => {
+        if(!isSolved) {
+            retryPuzzle();
+        }
+    }, [isSolved]);
 
     const retryPuzzle = () => {
         const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];

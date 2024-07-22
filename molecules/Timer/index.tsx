@@ -6,7 +6,7 @@ import RetryButton from "../../atoms/RetryButton"
 
 export default function Timer({ time }: { time: number }) {
     const [timeLeft, setTimeLeft] = useState(time)
-    const { isSolved, setIsFailed } = useSolved()
+    const { isSolved, setIsFailed, totalWins } = useSolved()
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -17,6 +17,11 @@ export default function Timer({ time }: { time: number }) {
 
         return () => clearInterval(interval)
     }, [timeLeft, isSolved])
+
+    useEffect(() => {
+        if(totalWins === 3) setTimeLeft(999)
+        else setTimeLeft(time)
+    }, [time, totalWins])
 
     return (
         <div>

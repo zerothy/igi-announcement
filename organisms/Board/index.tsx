@@ -180,7 +180,7 @@ export default function Board() {
                     <motion.img
                         src={`/images/level${totalWins + 1}/${tile}.${totalWins !== 2 ? 'png' : 'jpg'}`} 
                         alt={`${tile}`}
-                        className={`${totalWins === 0 ? 'w-[6rem] h-[6rem] md:w-[10rem] md:h-[10rem]' : (totalWins === 1 ? 'w-[3.6rem] h-[3.6rem] md:w-[6rem] md:h-[6rem]' : 'w-[2.571rem] h-[2.571rem] md:w-[4.285rem] md:h-[4.285rem]')} border border-solid border-gray-500 ${tile === (totalWins === 0 ? 9 : (totalWins === 1 ? 25 : 49)) ? 'opacity-0' : ''}`}
+                        className={`${totalWins === 0 ? 'w-[6rem] h-[6rem] md:w-[10rem] md:h-[10rem]' : (totalWins === 1 ? 'w-[3.6rem] h-[3.6rem] md:w-[6rem] md:h-[6rem]' : 'w-[2.571rem] h-[2.571rem] md:w-[4.285rem] md:h-[4.285rem]')} border border-solid border-gray-500 ${tile === (totalWins === 0 ? 9 : (totalWins === 1 ? 25 : 49)) ? 'opacity-0' : 'opacity-100'}`}
                         key={tile}
                         onDragStart={handleDragStart}   // NOTE: Click an image to drag
                         onDragOver={handleDragOver}     // NOTE: Moving the image while being clicked

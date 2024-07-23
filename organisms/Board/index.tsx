@@ -159,6 +159,15 @@ export default function Board() {
         setTurns(turns + 1);
     }
 
+    const handleTouchStart = (e: React.TouchEvent<HTMLImageElement>) => {
+        const tile = parseInt(e.currentTarget.alt);
+        setCurrTile(tile);
+    };
+    
+    const handleTouchMove = (e: React.TouchEvent<HTMLImageElement>) => {
+        e.preventDefault(); // Prevent scrolling when touching and moving on puzzle pieces
+    };
+
     return (
         <div className='w-[18.5rem] md:w-[30.5rem] h-[18.5rem] md:h-[30.5rem] z-[80] bg-[#671111] border-4 border-solid border-primary flex flex-wrap'>
             {
@@ -180,6 +189,8 @@ export default function Board() {
                         onDrop={handleDrop}             // NOTE: Dragged image then dropped the image on other image
                         onDragEnd={handleDragEnd}       // NOTE: After drop, swap the tiles
                         onClick={handleOnClick}         // NOTE: Click the image to move the tile
+                        onTouchStart={handleTouchStart} // NOTE: Touch the image to move the tile
+                        onTouchMove={handleTouchMove}   // NOTE: Moving the image while being touched
                         draggable={tile !== (totalWins === 0 ? 9 : (totalWins === 1 ? 25 : 49))} // NOTE: If the tile is not the blank tile, it can be dragged
 
                         layout

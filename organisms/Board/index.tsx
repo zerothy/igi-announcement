@@ -23,19 +23,20 @@ export default function Board() {
     const [order, setOrder] = useState<number[]>([]);
 
     useEffect(() => {
-        if(totalWins === 0) {
+        if(totalWins === 1) {
             const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
             setOrder(puzzleOrder);
             // setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
-        }else if(totalWins === 1) {
+        }else if(totalWins === 2) {
             const puzzleOrder = Level2Puzzle[Math.floor(Math.random() * Level2Puzzle.length)];
             setOrder(puzzleOrder);
             // setOrder([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24]);
-        }else if(totalWins === 2 || totalWins === 3) {
-            const puzzleOrder = Level3Puzzle[Math.floor(Math.random() * Level3Puzzle.length)];
-            setOrder(puzzleOrder);
-            // setOrder([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 48]);
         }
+        // else if(totalWins === 2 || totalWins === 3) {
+        //     const puzzleOrder = Level3Puzzle[Math.floor(Math.random() * Level3Puzzle.length)];
+        //     setOrder(puzzleOrder);
+        //     // setOrder([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 48]);
+        // }
         setIsLoading(false);
         setIsLoading(false);
 
@@ -56,11 +57,11 @@ export default function Board() {
 
     useEffect(() => {
         if(totalWins === 1){
+            setRows(3);
+            setColumns(3);
+        }else if(totalWins === 2){
             setRows(5);
             setColumns(5);
-        }else if(totalWins === 2){
-            setRows(7);
-            setColumns(7);
         }
     }, [totalWins])
 
@@ -69,19 +70,20 @@ export default function Board() {
     
         await new Promise(resolve => setTimeout(resolve, 0)); // Simulate async operation
     
-        if(totalWins === 0) {
+        if(totalWins === 1) {
             const puzzleOrder = Level1Puzzle[Math.floor(Math.random() * Level1Puzzle.length)];
             setOrder(puzzleOrder);
             // setOrder([1, 2, 3, 4, 5, 6, 7, 9, 8]);
-        } else if(totalWins === 1) {
+        } else if(totalWins === 2) {
             const puzzleOrder = Level2Puzzle[Math.floor(Math.random() * Level2Puzzle.length)];
             setOrder(puzzleOrder);
             // setOrder([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 25, 24]);
-        } else if(totalWins === 2 || totalWins === 3) {
-            const puzzleOrder = Level3Puzzle[Math.floor(Math.random() * Level3Puzzle.length)];
-            setOrder(puzzleOrder);
-            // setOrder([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 48]);
-        }
+        } 
+        // else if(totalWins === 2 || totalWins === 3) {
+        //     const puzzleOrder = Level3Puzzle[Math.floor(Math.random() * Level3Puzzle.length)];
+        //     setOrder(puzzleOrder);
+        //     // setOrder([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 49, 48]);
+        // }
     
         setIsSolved(false);
         setIsFailed(false);
@@ -128,9 +130,9 @@ export default function Board() {
 
     const handleDragEnd = () => {
         if(currTile === null || otherTile === null) return
-        if(totalWins === 0 && otherTile !== 9) return 
-        if(totalWins === 1 && otherTile !== 25) return
-        if(totalWins === 2 && otherTile !== 49) return
+        if(totalWins === 1 && otherTile !== 9) return 
+        if(totalWins === 2 && otherTile !== 25) return
+        // if(totalWins === 2 && otherTile !== 49) return
 
         const currCoord = order.indexOf(currTile);
         const otherCoord = order.indexOf(otherTile);
@@ -144,7 +146,7 @@ export default function Board() {
     }
 
     const handleOnClick = (e: any) => {
-        const blankTile = totalWins === 0 ? 9 : (totalWins === 1 ? 25 : 49);
+        const blankTile = totalWins === 1 ? 9 : (totalWins === 1 ? 25 : 49);
         
         const tile = parseInt(e.currentTarget.alt);
         const tileIndex = order.indexOf(tile);
@@ -178,9 +180,9 @@ export default function Board() {
                 ) :
                 (order.map((tile, index) => (
                     <motion.img
-                        src={`/images/level${totalWins + 1}/${tile}.${totalWins !== 2 ? 'png' : 'jpg'}`} 
+                        src={`/images/level${totalWins}/${tile}.${totalWins !== 2 ? 'png' : 'jpg'}`} 
                         alt={`${tile}`}
-                        className={`${totalWins === 0 ? 'w-[6rem] h-[6rem] md:w-[10rem] md:h-[10rem]' : (totalWins === 1 ? 'w-[3.6rem] h-[3.6rem] md:w-[6rem] md:h-[6rem]' : 'w-[2.571rem] h-[2.571rem] md:w-[4.285rem] md:h-[4.285rem]')} border border-solid border-gray-500 ${((totalWins === 0 && tile === 9) || (totalWins === 1 && tile === 25) || (totalWins > 1 && tile === 49)) ? 'opacity-0' : 'opacity-100'}`}
+                        className={`${totalWins === 1 ? 'w-[6rem] h-[6rem] md:w-[10rem] md:h-[10rem]' : (totalWins === 2 ? 'w-[3.6rem] h-[3.6rem] md:w-[6rem] md:h-[6rem]' : '')} border border-solid border-gray-500 ${((totalWins === 1 && tile === 9) || (totalWins === 2 && tile === 25)) ? 'opacity-0' : 'opacity-100'}`}
                         key={tile}
                         onDragStart={handleDragStart}   // NOTE: Click an image to drag
                         onDragOver={handleDragOver}     // NOTE: Moving the image while being clicked
@@ -191,12 +193,12 @@ export default function Board() {
                         onClick={handleOnClick}         // NOTE: Click the image to move the tile
                         onTouchStart={handleTouchStart} // NOTE: Touch the image to move the tile
                         onTouchMove={handleTouchMove}   // NOTE: Moving the image while being touched
-                        draggable={tile !== (totalWins === 0 ? 9 : (totalWins === 1 ? 25 : 49))} // NOTE: If the tile is not the blank tile, it can be dragged
+                        draggable={tile !== (totalWins === 1 ? 9 : (totalWins === 2 ? 25 : 49))} // NOTE: If the tile is not the blank tile, it can be dragged
 
                         layout
                         layoutId={`tile-${tile}`}
                         transition={{ duration: 0.2 }}
-                        initial={{opacity: tile === (totalWins === 0 ? 9 : (totalWins === 1 ? 25 : 49)) ? 0 : 1}}
+                        initial={{opacity: tile === (totalWins === 1 ? 9 : (totalWins === 2 ? 25 : 49)) ? 0 : 1}}
                     />
                 )))
             }

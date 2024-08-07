@@ -180,7 +180,7 @@ export default function Board() {
                 ) :
                 (order.map((tile, index) => (
                     <motion.img
-                        src={`/images/level${totalWins}/${tile}.${totalWins !== 2 ? 'png' : 'jpg'}`} 
+                        src={`/images/level${totalWins}/${tile}.png`} 
                         alt={`${tile}`}
                         className={`${totalWins === 1 ? 'w-[6rem] h-[6rem] md:w-[10rem] md:h-[10rem]' : (totalWins === 2 ? 'w-[3.6rem] h-[3.6rem] md:w-[6rem] md:h-[6rem]' : '')} border border-solid border-gray-500 ${((totalWins === 1 && tile === 9) || (totalWins === 2 && tile === 25)) ? 'opacity-0' : 'opacity-100'}`}
                         key={tile}
